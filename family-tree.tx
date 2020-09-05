@@ -1,0 +1,46 @@
+FamilyTreeModel:
+  'persons'
+    persons *= Person
+  'end'  
+  commands *= Command
+;
+
+Person:
+  name = ID firstName = ID lastName = ID dateOfBirth = Date status = Status? gender = Gender?  
+;
+
+Supose:
+  supose = [Person]  untill = Date?
+;
+
+Command:
+  ParentCommand | GenderCommand | StatusCommand
+;
+
+ParentCommand:
+  'parent(' p=[Person] ',' c = [Person] ').'
+;
+
+GenderCommand:
+  gender = Gender '(' person = [Person] ').'
+;
+
+StatusCommand:
+  'status(' person = [Person] ',' status = Status ').'
+;
+
+Date:
+  day = INT '.' month = INT '.' year = INT '.'
+;
+
+Gender:
+  'male'|'female'
+;
+
+Status:
+  'alive'|'dead'
+;
+
+Comment:
+  /\/\/.*$/
+;

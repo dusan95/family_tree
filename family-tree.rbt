@@ -1,0 +1,67 @@
+persons
+    benjen_stark Benjen Stark 27.78.4551.
+    bran_stark Bran Stark 27.78.4551.
+    brandon_stark Brandon Stark 27.78.4551.
+    eddard_stark Eddard Stark 27.78.4551.
+    jon_snow John Snow 27.78.4551.
+    rickard_stark Rickard Stark 31.07.1995.
+    rickon_stark Ricon Stark 27.78.4551.
+    robb_stark Robb Stark 27.78.4551.
+    arya_stark Arya Stark 27.78.4551.
+    catelyn_stark Catelyn Stark 27.78.4551.
+    lyanna_stark Lyanna Stark 27.78.4551.
+    sansa_stark Sansa Stark 27.78.4551.
+    unknown_mother_stark Unknown Stark 27.78.4551.
+end
+
+male(benjen_stark).
+male(bran_stark).
+male(brandon_stark).
+male(eddard_stark).
+male(jon_snow).
+male(rickard_stark). 
+male(rickon_stark).
+male(robb_stark).
+female(arya_stark).
+female(catelyn_stark).
+female(lyanna_stark).
+female(sansa_stark).
+female(unknown_mother_stark). 
+
+status(benjen_stark, dead).
+status(bran_stark, alive).
+status(brandon_stark, dead).
+status(eddard_stark, dead).
+status(jon_snow, alive).
+status(rickard_stark, dead). 
+status(rickon_stark, dead).
+status(robb_stark, dead).
+status(arya_stark, alive).
+status(catelyn_stark, dead).
+status(lyanna_stark, dead).
+status(sansa_stark, alive).
+status(unknown_mother_stark, dead). 
+
+parent(rickard_stark, brandon_stark).
+parent(rickard_stark, eddard_stark).
+parent(rickard_stark, benjen_stark).
+parent(rickard_stark, lyanna_stark).
+parent(unknown_mother_stark, brandon_stark).
+parent(unknown_mother_stark, eddard_stark).
+parent(unknown_mother_stark, benjen_stark).
+parent(unknown_mother_stark, lyanna_stark).
+parent(eddard_stark, robb_stark).
+parent(eddard_stark, sansa_stark).
+parent(eddard_stark, arya_stark).
+parent(eddard_stark, bran_stark).
+parent(eddard_stark, rickon_stark).
+parent(catelyn_stark, robb_stark).
+parent(catelyn_stark, sansa_stark).
+parent(catelyn_stark, arya_stark).
+parent(catelyn_stark, bran_stark).
+parent(catelyn_stark, rickon_stark).
+parent(lyanna_stark, jon_snow).
+
+
+
+
