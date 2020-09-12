@@ -11,8 +11,8 @@ Person:
     ('b:'dateOfBirth=Date)?  
     ('a:'status=Status)? 
     ('g:'gender=Gender)? 
-    ('f:'parent1=[Person])? 
-    ('m:'parent2=[Person])? 
+    ('p:'parent1=[Person])? 
+    ('p:'parent2=[Person])? 
     ('s:'spouses *= SpouseID[','])? 
     ('c:'children *= Children[','])?';'
 ;
@@ -41,7 +41,7 @@ SpouseID:
 ;
 
 Spouse:
-  person=[Person]  from=Date?
+  person=[Person]  since=Date?
 ;
 
 Comment:
