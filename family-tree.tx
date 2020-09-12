@@ -2,45 +2,65 @@ FamilyTreeModel:
   'persons'
     persons *= Person
   'end'  
-  commands *= Command
+  queries *= QueryCommand
 ;
 
 Person:
-  name = ID firstName = ID lastName = ID dateOfBirth = Date status = Status? gender = Gender?  
+  name=PersonID 
+    'n:'firstName=ID lastName=ID 
+    ('b:'dateOfBirth=Date)?  
+    ('a:'status=Status)? 
+    ('g:'gender=Gender)? 
+    ('f:'parent1=[Person])? 
+    ('m:'parent2=[Person])? 
+    ('s:'spouses *= SpouseID[','])? 
+    ('c:'children *= Children[','])?';'
 ;
 
-Supose:
-  supose = [Person]  untill = Date?
-;
-
-Command:
-  ParentCommand | GenderCommand | StatusCommand
-;
-
-ParentCommand:
-  'parent(' p=[Person] ',' c = [Person] ').'
-;
-
-GenderCommand:
-  gender = Gender '(' person = [Person] ').'
-;
-
-StatusCommand:
-  'status(' person = [Person] ',' status = Status ').'
+PersonID:
+  !'end' ID
 ;
 
 Date:
-  day = INT '.' month = INT '.' year = INT '.'
-;
-
-Gender:
-  'male'|'female'
+  day=INT'.'month=INT'.'year=INT'.'
 ;
 
 Status:
   'alive'|'dead'
 ;
+Gender:
+  'male'|'female'
+;
+
+Children:
+  person=[Person]
+;
+
+SpouseID:
+  !'c:'Spouse
+;
+
+Spouse:
+  person=[Person]  from=Date?
+;
 
 Comment:
   /\/\/.*$/
+;
+
+QueryCommand:
+    RelationshipQuery | YesNoQuery
+;
+
+RelationshipQuery:
+    '?'TypeOfRelationship'('p = [Person]')'
+;
+
+YesNoQuery:
+    '?'TypeOfRelationship'(' p1 = [Person] ',' p2 = [Person] ')'
+;
+
+
+TypeOfRelationship:
+  'parents'|'siblings'|'grandparents'|'fathersSister'|'mothersSister'|'fathersBrother'|'mothersBrother'
 ;
