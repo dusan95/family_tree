@@ -62,6 +62,8 @@ def showParents(person):
             print("Parent: {} {}".format(person.parent1.firstName, person.parent1.lastName))
         if person.parent2 is not None:
             print("Parent: {} {}".format(person.parent2.firstName, person.parent2.lastName))
+        if person.parent1 is None and person.parent2 is None:
+            print("No data about parents")    
 
 def showBrothersAndSisters(person):
     """
@@ -81,7 +83,7 @@ def showBrothersAndSisters(person):
                         exists = True
                 if not exists:
                     brothersAndSisters.append(Person(c.person.name, c.person.firstName, c.person.lastName))
-    if brothersAndSisters.count != 0:
+    if brothersAndSisters:
         print("Brothers and sisters:")
         for bns in brothersAndSisters:
             print("\t{} {}".format(bns.name, bns.lastName))
@@ -111,20 +113,27 @@ def chooseRelationship():
     choise = input()
     print("Enter person")
     personId = input()
-    if choise == "1":
-        showParents(personId)
-    if choise == "2":
-        showBrothersAndSisters(personId)
-    if choise == "3":
-        showParents(personId)
-    if choise == "4":
-        showParents(personId)
-    if choise == "5":
-        showParents(personId)
-    if choise == "6":
-        showParents(personId)
-    if choise == "7":
-        showParents(personId)
+    family_tree_model = getFamilyTreeModel()
+    found = False
+    for person in family_tree_model.persons:
+        if person.name == personId:
+            found = True
+            if choise == "1":
+                showParents(person)
+            if choise == "2":
+                showBrothersAndSisters(person)
+            if choise == "3":
+                showParents(person)
+            if choise == "4":
+                showParents(person)
+            if choise == "5":
+                showParents(person)
+            if choise == "6":
+                showParents(person)
+            if choise == "7":
+                showParents(person)
+    if not found:
+        print("The peson {} doesn't exist!".format(personId))
 
 if __name__ == '__main__':
     while do:
@@ -147,12 +156,15 @@ if __name__ == '__main__':
             print("Enter person name") 
             personId = input()
             displayPersonData(personId)
-        if(choise == "2"):
-            chooseRelationship()
-        if choise == "3":
-            continue
-        if(choise == "4"):
-            do = False
         else:
-            print("wrong entry")
+            if(choise == "2"):
+                chooseRelationship()
+            else:
+                if choise == "3":
+                    continue
+                else:
+                    if(choise == "4"):
+                        do = False
+                    else:
+                        print("wrong entry")
 
