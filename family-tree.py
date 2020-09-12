@@ -88,6 +88,31 @@ def showBrothersAndSisters(person):
         for bns in brothersAndSisters:
             print("\t{} {}".format(bns.name, bns.lastName))
 
+def showGrandparents(person):
+    """
+    A function that prints out grandparents of a person.
+    """
+    if person.parent1 is not None and person.parent2 is not None:
+        if person.parent1.parent1 is not None and person.parent1.parent2 is not None and person.parent2.parent1 is not None and person.parent2.parent2 is not None:
+            print("Grandparents from {}'s side are {} {} and {} {}, from {}'s side are {} {} and {} {}".format(person.parent1.firstName, person.parent1.parent1.firstName, person.parent1.parent1.lastName, person.parent1.parent2.firstName, person.parent1.parent2.lastName,     person.parent2.firstName, person.parent2.parent1.firstName, person.parent2.parent1.lastName, person.parent2.parent2.firstName, person.parent2.parent2.lastName))
+        else:
+            if person.parent1.parent1 is not None and person.parent1.parent2 is not None:
+                print("Grandparents from {}'s side are {} {} and {} {}".format(person.parent1.firstName, person.parent1.parent1.firstName, person.parent1.parent1.lastName, person.parent1.parent2.firstName, person.parent1.parent2.lastName))
+            if person.parent2.parent1 is not None and person.parent2.parent2 is not None:
+                print("Grandparents from {}'s side are {} {} and {} {}".format(person.parent2.firstName, person.parent2.parent1.firstName, person.parent2.parent1.lastName, person.parent2.parent2.firstName, person.parent2.parent2.lastName))
+            if person.parent1.parent1 is not None:
+                print("Grandparent from {}'s side is {} {}".format(person.parent1.firstName, person.parent1.parent1.firstName, person.parent1.parent1.lastName))
+            if person.parent1.parent2 is not None:
+                print("Grandparent from {}'s side is {} {}".format(person.parent1.firstName, person.parent1.parent2.firstName, person.parent1.parent2.lastName))
+            if person.parent2.parent1 is not None:
+                print("Grandparent from {}'s side is {} {}".format(person.parent2.firstName, person.parent2.parent1.firstName, person.parent2.parent1.lastName))
+            if person.parent2.parent2 is not None:
+                print("Grandparent from {}'s side is {} {}".format(person.parent1.firstName, person.parent2.parent2.firstName, person.parent2.parent2.lastName))
+            if person.parent1.parent1 is None and person.parent1.parent2 is None and person.parent2.person1 is None and person.parent2.parent2 is None:
+                print("No data about grandparents")
+    else:
+        print("No data about parents, also about grandparents")
+
 def displayPersonData(personId,  debug = False):
     family_tree_model = getFamilyTreeModel()
     found = False
@@ -123,7 +148,7 @@ def chooseRelationship():
             if choise == "2":
                 showBrothersAndSisters(person)
             if choise == "3":
-                showParents(person)
+                showGrandparents(person)
             if choise == "4":
                 showParents(person)
             if choise == "5":
@@ -148,7 +173,7 @@ if __name__ == '__main__':
     while do:
         print("\nChoose one of the options: ")
         print("1 - show person data")
-        print("2 - show perons relationships")
+        print("2 - show persons relationships")
         print("3 - show relationship")
         print("4 - end")
         choise = input()

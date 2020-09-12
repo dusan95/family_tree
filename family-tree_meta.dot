@@ -1,0 +1,69 @@
+
+    digraph textX {
+    fontname = "Bitstream Vera Sans"
+    fontsize = 8
+    node[
+        shape=record,
+        style=filled,
+        fillcolor=aliceblue
+    ]
+    nodesep = 0.3
+    edge[dir=black,arrowtail=empty]
+
+
+43498768[ label="{FamilyTreeModel|}"]
+
+43517360[ label="{Person|name: PersonID\lfirstName: ID\llastName: ID\lstatus: Status\lgender: Gender\l}"]
+
+43745792[ label="{Date|day: INT\lmonth: INT\lyear: INT\l}"]
+
+43762648[ label="{Children|}"]
+
+43745320[ label="{*SpouseID|}"]
+
+43509640[ label="{Spouse|}"]
+
+43765008[ label="{*QueryCommand|}"]
+
+43779032[ label="{RelationshipQuery|}"]
+
+43780448[ label="{YesNoQuery|}"]
+
+
+
+43498768 -> 43517360[arrowtail=diamond, dir=both, headlabel="persons 0..*"]
+43498768 -> 43765008[arrowtail=diamond, dir=both, headlabel="queries 0..*"]
+43517360 -> 43745792[arrowtail=diamond, dir=both, headlabel="dateOfBirth "]
+43517360 -> 43517360[headlabel="parent1 "]
+43517360 -> 43517360[headlabel="parent2 "]
+43517360 -> 43745320[arrowtail=diamond, dir=both, headlabel="spouses 0..*"]
+43517360 -> 43762648[arrowtail=diamond, dir=both, headlabel="children 0..*"]
+43762648 -> 43517360[headlabel="person "]
+43745320 -> 43509640 [dir=back]
+43509640 -> 43517360[headlabel="person "]
+43509640 -> 43745792[arrowtail=diamond, dir=both, headlabel="since "]
+43765008 -> 43779032 [dir=back]
+43765008 -> 43780448 [dir=back]
+43779032 -> 43517360[headlabel="p "]
+43780448 -> 43517360[headlabel="p1 "]
+43780448 -> 43517360[headlabel="p2 "]
+match_rules [ shape=plaintext, label=< <table>
+	<tr>
+		<td><b>Comment</b></td><td>\/\/.*$</td>
+	</tr>
+	<tr>
+		<td><b>Gender</b></td><td>male|female</td>
+	</tr>
+	<tr>
+		<td><b>PersonID</b></td><td>Not(end) ID</td>
+	</tr>
+	<tr>
+		<td><b>Status</b></td><td>alive|dead</td>
+	</tr>
+	<tr>
+		<td><b>TypeOfRelationship</b></td><td>parents|siblings|grandparents|fathersSister|mothersSister|fathersBrother|mothersBrother</td>
+	</tr>
+</table> >]
+
+
+}
