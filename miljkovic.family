@@ -1,0 +1,108 @@
+persons
+    tomislav_andjelkovic 
+        n:Tomislav Andjelkovic 
+        a:dead
+        g:male
+        s:simka_andjelkovic
+        c:ljiljana_vucinic , marina_miljkovic , olgica_andjelkovic;
+    simka_andjelkovic 
+        n:Simka Andjelkovic 
+        a:dead 
+        g:female
+        s:tomislav_andjelkovic
+        c:ljiljana_vucinic , marina_miljkovic , olgica_andjelkovic;
+
+    ljiljana_vucinic
+        n:Ljiljana Vucinic
+        a:alive
+        g:female
+        f:tomislav_andjelkovic 
+        m:simka_andjelkovic;
+    olgica_andjelkovic
+        n:Olgica Andjelkovic
+        a:dead
+        g:female
+        f:tomislav_andjelkovic 
+        m:simka_andjelkovic;
+    marina_miljkovic 
+        n:Marina Miljkovic 
+        b:10.08.1968. 
+        a:alive
+        g:female 
+        f:tomislav_andjelkovic 
+        m:simka_andjelkovic
+        s:miomir_miljkovic 01.01.1987.
+        c:milos_miljkovic, jelena_miljkovic, dusan_miljkovic_m;
+    
+    dusan_miljkovic
+        n:Dusan Miljkovic
+        a:dead
+        g:male
+        s:stana_miljkovic
+        c:aleksandar_miljkovic, ljubisa_miljkovic, miomir_miljkovic;
+    stana_miljkovic
+        n:Stana Miljkovic
+        a:alive
+        g:female
+        s:dusan_miljkovic
+        c:aleksandar_miljkovic, ljubisa_miljkovic, miomir_miljkovic;
+
+    aleksandar_miljkovic
+        n:Aleksandar Miljkovic
+        a:alive
+        g:male
+        f:dusan_miljkovic
+        m:stana_miljkovic;
+    ljubisa_miljkovic
+        n:Ljubisa Miljkovic
+        a:alive
+        g:male
+        f:dusan_miljkovic
+        m:stana_miljkovic;
+    miomir_miljkovic
+        n:Miomir Miljkovic
+        b:21.01.1966.
+        a:alive
+        g:male
+        f:dusan_miljkovic
+        m:stana_miljkovic
+        s:marina_miljkovic 01.01.1987.
+        c:milos_miljkovic, jelena_miljkovic, dusan_miljkovic_m;
+        
+    milos_miljkovic
+        n:Milos Miljkovic
+        b:16.01.1988.
+        a:alive
+        g:male
+        f:miomir_miljkovic
+        m:marina_miljkovic
+        s:danijela_miljkovic 27.07.2007.;
+    jelena_miljkovic
+        n:Jelena Miljkovic
+        b:26.09.1989.
+        a:alive
+        g:female
+        f:miomir_miljkovic
+        m:marina_miljkovic;
+    dusan_miljkovic_m
+        n:Dusan Miljkovic
+        b:31.07.1995.
+        a:alive
+        g:male
+        f:miomir_miljkovic
+        m:marina_miljkovic;
+    danijela_miljkovic
+        n:Danijela Miljkovic
+        b:31.07.1987.
+        a:alive
+        g:female
+        s:milos_miljkovic 27.07.2007.;
+end
+
+?parents(dusan_miljkovic)
+?siblings(dusan_miljkovic)
+?grandparents(dusan_miljkovic)
+?fathersSister(dusan_miljkovic)
+?mothersSister(dusan_miljkovic)
+?fathersBrother(dusan_miljkovic)
+?mothersBrother(dusan_miljkovic)
