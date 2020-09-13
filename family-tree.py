@@ -119,6 +119,143 @@ def showChildren(person):
     else:
         print("\tNo children.")
 
+def showGrandparents(person):
+    """
+    A function that prints out grandparents of a person.
+    """
+    if person.parent1 is not None and person.parent2 is not None:
+        if person.parent1.parent1 is not None and person.parent1.parent2 is not None and person.parent2.parent1 is not None and person.parent2.parent2 is not None:
+            print("Grandparents from {}'s side are {} {} and {} {}, from {}'s side are {} {} and {} {}".format(person.parent1.firstName, person.parent1.parent1.firstName, person.parent1.parent1.lastName, person.parent1.parent2.firstName, person.parent1.parent2.lastName,     person.parent2.firstName, person.parent2.parent1.firstName, person.parent2.parent1.lastName, person.parent2.parent2.firstName, person.parent2.parent2.lastName))
+        else:
+            if person.parent1.parent1 is not None and person.parent1.parent2 is not None:
+                print("Grandparents from {}'s side are {} {} and {} {}".format(person.parent1.firstName, person.parent1.parent1.firstName, person.parent1.parent1.lastName, person.parent1.parent2.firstName, person.parent1.parent2.lastName))
+            if person.parent2.parent1 is not None and person.parent2.parent2 is not None:
+                print("Grandparents from {}'s side are {} {} and {} {}".format(person.parent2.firstName, person.parent2.parent1.firstName, person.parent2.parent1.lastName, person.parent2.parent2.firstName, person.parent2.parent2.lastName))
+            if person.parent1.parent1 is not None:
+                print("Grandparent from {}'s side is {} {}".format(person.parent1.firstName, person.parent1.parent1.firstName, person.parent1.parent1.lastName))
+            if person.parent1.parent2 is not None:
+                print("Grandparent from {}'s side is {} {}".format(person.parent1.firstName, person.parent1.parent2.firstName, person.parent1.parent2.lastName))
+            if person.parent2.parent1 is not None:
+                print("Grandparent from {}'s side is {} {}".format(person.parent2.firstName, person.parent2.parent1.firstName, person.parent2.parent1.lastName))
+            if person.parent2.parent2 is not None:
+                print("Grandparent from {}'s side is {} {}".format(person.parent1.firstName, person.parent2.parent2.firstName, person.parent2.parent2.lastName))
+            if person.parent1.parent1 is None and person.parent1.parent2 is None and person.parent2.person1 is None and person.parent2.parent2 is None:
+                print("No data about grandparents")
+    else:
+        print("No data about parents, also about grandparents")
+
+def showAunts(person):
+    """
+    A function that prints out aunts of a person.
+    """
+    Aunts=[]
+    Sisters=[]
+    if person.parent1 is not None:
+        Aunts=findSisters(person.parent1)
+    if person.parent2 is not None:
+        Sisters=findSisters(person.parent2)
+        for s in Sisters:
+            Aunts.append(s)
+    if Aunts:                        
+        print("Aunts are:")  
+        for aunt in Aunts:
+            print("\t{} {}".format(aunt.name, aunt.lastName))
+
+def showUncles(person):
+    """
+    A function that prints out uncles of a person.
+    """
+    Uncles=[]
+    if person.parent1 is not None and person.parent1.gender=='female':
+        Uncles=findBrothers(person.parent1)
+    if person.parent2 is not None and person.parent2.gender=='female':
+        Uncles=findBrothers(person.parent2)        
+    if Uncles:                        
+        print("Uncles are:")  
+        for uncle in Uncles:
+            print("\t{} {}".format(uncle.name, uncle.lastName))
+
+
+def findSisters(person):
+    """
+    A function that prints out sisters of a person
+    """
+    Sisters=[]
+    if person.parent1 is not None:
+        if person.parent1.children:
+            for child in person.parent1.children:
+                if not child.person.name == person.name:
+                    if child.person.gender == 'female':
+                        Sisters.append(Person(child.person.name, child.person.firstName, child.person.lastName))
+            exist=False
+    if person.parent2 is not None:
+        if person.parent2.children:
+            for child in person.parent2.children:
+                exist=False
+                if not child.person.name == person.name:
+                    if child.person.gender == 'female':
+                        for sis in Sisters:
+                            if sis.id == child.person.name:   
+                                exist=True 
+                        if not exist:
+                            Sisters.append(Person(child.person.name, child.person.firstName, child.person.lastName))
+    return Sisters
+
+def showSisters(person):
+
+    Sisters=[]
+    Sisters=findSisters(person)
+    if Sisters:                        
+        print("Sisters are:")  
+        for s in Sisters:
+            print("\t{} {}".format(s.name, s.lastName))
+
+def findBrothers(person):
+    """
+    A function that prints out sisters of a person
+    """
+    Brothers=[]
+    if person.parent1 is not None:
+        if person.parent1.children:
+            for child in person.parent1.children:
+                if not child.person.name == person.name:
+                    if child.person.gender == 'male':
+                        Brothers.append(Person(child.person.name, child.person.firstName, child.person.lastName))
+            exist=False
+    if person.parent2 is not None:
+        if person.parent2.children:
+            for child in person.parent2.children:
+                exist=False
+                if not child.person.name == person.name:
+                    if child.person.gender == 'male':
+                        for bro in Brothers:
+                            if bro.id == child.person.name:   
+                                exist=True 
+                        if not exist:
+                            Brothers.append(Person(child.person.name, child.person.firstName, child.person.lastName))
+    return Brothers
+
+def showBrothers(person):
+
+    Brothers=[]
+    Brothers=findBrothers(person)
+    if Brothers:                        
+        print("Brothers are:")  
+        for b in Brothers:
+            print("\t{} {}".format(b.name, b.lastName))
+
+#def showSistersInLaw(person):
+
+#    SistersInLaw=[]
+#    Brothers=[]
+#    Brothers=findBrothers(person)
+#    for brother in Brothers:
+#        print("ISPISI {}".format(brother.supose))
+#    if SistersInLaw:                        
+#        print("Sisters in law are:")  
+#        for sl in SistersInLaw:
+ #           print("\t{} {}".format(sl.name, sl.lastName))
+
 def displayPersonData(personId,  debug = False):
     family_tree_model = getFamilyTreeModel()
     found = False
@@ -156,13 +293,14 @@ def chooseRelationship():
             if choise == "2":
                 showBrothersAndSisters(person)
             if choise == "3":
-                showParents(person)
+                showGrandparents(person)
             if choise == "4":
-                showParents(person)
+                showAunts(person)
             if choise == "5":
-                showParents(person)
+                showUncles(person)
             if choise == "6":
                 showParents(person)
+                #showSistersInLaw(person)
             if choise == "7":
                 showParents(person)
     if not found:
@@ -181,7 +319,7 @@ if __name__ == '__main__':
     while do:
         print("\nChoose one of the options: ")
         print("1 - show person data")
-        print("2 - show perons relationships")
+        print("2 - show persons relationships")
         print("3 - show relationship")
         print("4 - display results from query file")
         print("5 - end")
