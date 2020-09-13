@@ -11,42 +11,42 @@
     edge[dir=black,arrowtail=empty]
 
 
-43498768[ label="{FamilyTreeModel|}"]
+18092072[ label="{FamilyTreeModel|}"]
 
-43517360[ label="{Person|name: PersonID\lfirstName: ID\llastName: ID\lstatus: Status\lgender: Gender\l}"]
+17714448[ label="{Person|name: PersonID\lfirstName: ID\llastName: ID\lstatus: Status\lgender: Gender\l}"]
 
-43745792[ label="{Date|day: INT\lmonth: INT\lyear: INT\l}"]
+17560536[ label="{Date|day: INT\lmonth: INT\lyear: INT\l}"]
 
-43762648[ label="{Children|}"]
+17532336[ label="{Children|}"]
 
-43745320[ label="{*SpouseID|}"]
+17533752[ label="{*SpouseID|}"]
 
-43509640[ label="{Spouse|}"]
+17625600[ label="{Spouse|}"]
 
-43765008[ label="{*QueryCommand|}"]
+17628432[ label="{*QueryCommand|}"]
 
-43779032[ label="{RelationshipQuery|}"]
+44311512[ label="{RelationshipQuery|}"]
 
-43780448[ label="{YesNoQuery|}"]
+17625128[ label="{YesNoQuery|}"]
 
 
 
-43498768 -> 43517360[arrowtail=diamond, dir=both, headlabel="persons 0..*"]
-43498768 -> 43765008[arrowtail=diamond, dir=both, headlabel="queries 0..*"]
-43517360 -> 43745792[arrowtail=diamond, dir=both, headlabel="dateOfBirth "]
-43517360 -> 43517360[headlabel="parent1 "]
-43517360 -> 43517360[headlabel="parent2 "]
-43517360 -> 43745320[arrowtail=diamond, dir=both, headlabel="spouses 0..*"]
-43517360 -> 43762648[arrowtail=diamond, dir=both, headlabel="children 0..*"]
-43762648 -> 43517360[headlabel="person "]
-43745320 -> 43509640 [dir=back]
-43509640 -> 43517360[headlabel="person "]
-43509640 -> 43745792[arrowtail=diamond, dir=both, headlabel="since "]
-43765008 -> 43779032 [dir=back]
-43765008 -> 43780448 [dir=back]
-43779032 -> 43517360[headlabel="p "]
-43780448 -> 43517360[headlabel="p1 "]
-43780448 -> 43517360[headlabel="p2 "]
+18092072 -> 17714448[arrowtail=diamond, dir=both, headlabel="persons 0..*"]
+18092072 -> 17628432[arrowtail=diamond, dir=both, headlabel="queries 0..*"]
+17714448 -> 17560536[arrowtail=diamond, dir=both, headlabel="dateOfBirth "]
+17714448 -> 17714448[headlabel="parent1 "]
+17714448 -> 17714448[headlabel="parent2 "]
+17714448 -> 17533752[arrowtail=diamond, dir=both, headlabel="spouses 0..*"]
+17714448 -> 17532336[arrowtail=diamond, dir=both, headlabel="children 0..*"]
+17532336 -> 17714448[headlabel="person "]
+17533752 -> 17625600 [dir=back]
+17625600 -> 17714448[headlabel="person "]
+17625600 -> 17560536[arrowtail=diamond, dir=both, headlabel="since "]
+17628432 -> 44311512 [dir=back]
+17628432 -> 17625128 [dir=back]
+44311512 -> 17714448[headlabel="p "]
+17625128 -> 17714448[headlabel="p1 "]
+17625128 -> 17714448[headlabel="p2 "]
 match_rules [ shape=plaintext, label=< <table>
 	<tr>
 		<td><b>Comment</b></td><td>\/\/.*$</td>
