@@ -31,21 +31,13 @@ def getFamilyTreeModel(debug = False):
     model_export(family_tree_model, join(this_folder, 'family-tree.dot'))
     return family_tree_model
 
-def checkFirstNameNotNull(person):
-    """
-    Returns persons first name if not null.
-    """
-    if person.firstName is not None:
-        return person.firstName
-    return ""
-
-def checkLastNameNotNull(person):
-    """
-    Returns persons last name if not null.
-    """
-    if person.lastName is not None:
-        return person.lastName
-    return ""
+def checkIfPersonExistsInModel(personId):
+    family_tree_model = getFamilyTreeModel()
+    found = False
+    for person in family_tree_model.persons:
+        if person.name == personId:
+            found = True
+    return found
 
 def bornOn(person):
     """
@@ -64,22 +56,22 @@ def showSpouses(person):
         print("Spouses:")
         for sp in person.spouses:
             if sp.since:
-                print("\t{} {}, since {}.{}.{}.".format(checkFirstNameNotNull(sp.person), checkLastNameNotNull(sp.person), sp.since.day, sp.since.month, sp.since.year))
+                print("\t{} {}, since {}.{}.{}.".format(sp.person.firstName, sp.person.lastName, sp.since.day, sp.since.month, sp.since.year))
             else:
-                print("\t{} {}".format(checkFirstNameNotNull(sp.person), checkLastNameNotNull(sp.person)))
+                print("\t{} {}".format(sp.person.firstName, sp.person.lastName))
 
 def showParents(person):
     """
     A function that prints a person's parents.
     """
     if person.parent1 and person.parent2:
-        print("Parents: {} {} and {} {}".format(checkFirstNameNotNull(person.parent1), checkLastNameNotNull(person.parent1),
-        checkFirstNameNotNull(person.parent2), checkLastNameNotNull(person.parent2)))
+        print("Parents: {} {} and {} {}".format(person.parent1.firstName, person.parent1.lastName,
+        person.parent2.firstName, person.parent2.lastName))
     else:
         if person.parent1:
-            print("Parent: {} {}".format(checkFirstNameNotNull(person.parent1), checkLastNameNotNull(person.parent1)))
+            print("Parent: {} {}".format(person.parent1.firstName, person.parent1.lastName))
         if person.parent2:
-            print("Parent: {} {}".format(checkFirstNameNotNull(person.parent2), checkLastNameNotNull(person.parent2)))
+            print("Parent: {} {}".format(person.parent2.firstName, person.parent2.lastName))
         if person.parent1 is None and person.parent2 is None:
             print("No data about parents.")    
 
@@ -115,7 +107,7 @@ def showChildren(person):
     if person.children:
         print("Children:")
         for c in person.children:
-            print("\t{} {}".format(checkFirstNameNotNull(c.person), checkLastNameNotNull(c.person)))
+            print("\t{} {}".format(c.person.firstName, c.person.lastName))
     else:
         print("\tNo children.")
 
@@ -267,7 +259,7 @@ def displayPersonData(personId,  debug = False):
     found = False
     for person in family_tree_model.persons:
         if person.name == personId:
-            print("\n{} {}".format(checkFirstNameNotNull(person), checkLastNameNotNull(person)))
+            print("\n{} {}".format(person.firstName, person.lastName))
             bornOn(person)
             showSpouses(person)
             showParents(person)
@@ -312,6 +304,60 @@ def chooseRelationship():
     if not found:
         print("The peson {} doesn't exist in this family!".format(personId))
 
+def printParent(p, c):
+    if p.gender:
+        if p.gender == "male":
+            return print("{} {} is father of {} {}".format(p.firstName, p.lastName, c.firstName, c.lastName))
+        else:
+            return print("{} {} is mother of {} {}".format(p.firstName, p.lastName, c.firstName, c.lastName))
+    else:
+        return print("{} {} is parent of {} {}".format(p.firstName, p.lastName, c.firstName, c.lastName))
+
+def checkIfParent(p, c):
+    if c.parent1:
+        if c.parent1.name == p.name:
+            printParent(p, c)
+            return True
+    if c.parent2:
+        if c.parent2.name == p.name:
+            printParent(p, c)
+            return True
+    return False
+
+def printChild(c, p):
+    if c.gender:
+        if c.gender == "male":
+            return print("{} {} is son of {} {}".format(c.firstName, c.lastName, p.firstName, p.lastName))
+        else:
+            return print("{} {} is daughter of {} {}".format(c.firstName, c.lastName, p.firstName, p.lastName))
+    else:
+        return print("{} {} is child of {} {}".format(c.firstName, c.lastName, p.firstName, p.lastName))
+
+def checkIfChild(c, p):
+    if c.parent1:
+        if c.parent1.name == p.name:
+            printChild(c, p)
+            return True
+    if c.parent2:
+        if c.parent2.name == p.name:
+            printChild(c, p)
+            return True
+    return False
+
+def getPerson(personId):
+    family_tree_model = getFamilyTreeModel()
+    for person in family_tree_model.persons:
+        if person.name == personId:
+            return person
+
+def findRelationship(firstPersonId, secondPersonId):
+    firstPerson = getPerson(firstPersonId)
+    secondPerson = getPerson(secondPersonId)
+    if checkIfParent(firstPerson, secondPerson):
+        return
+    if checkIfChild(firstPerson, secondPerson):
+        return
+
 if __name__ == '__main__':
     while do:
         print("Please enter filename")
@@ -326,9 +372,8 @@ if __name__ == '__main__':
         print("\nChoose one of the options: ")
         print("1 - show person data")
         print("2 - show persons relationships")
-        print("3 - show relationship")
-        print("4 - display results from query file")
-        print("5 - end")
+        print("3 - find relationship")
+        print("4 - end")
         choise = input()
         if choise == "1":
             displayData = True
@@ -344,13 +389,24 @@ if __name__ == '__main__':
                 chooseRelationship()
             else:
                 if choise == "3":
-                    continue
+                    findNextRelationship = True
+                    while findNextRelationship:
+                        print("Enter persons:")
+                        firstPerson = input()
+                        secondPerson = input()
+                        if not checkIfPersonExistsInModel(firstPerson) or not checkIfPersonExistsInModel(secondPerson):
+                            print("Wrong input!")
+                        else:
+                            if firstPerson == secondPerson:
+                                print("It's the same person")
+                            else:
+                                findRelationship(firstPerson, secondPerson)
+                                print("Press enter to find another relationship or anything to go back")
+                                if input() != "":
+                                    findNextRelationship = False
                 else:
                     if choise == "4":
-                        pass
+                        do = False
                     else:
-                        if choise == "5":
-                            do = False
-                        else:
-                            print("wrong entry")
+                        print("wrong entry")
 
