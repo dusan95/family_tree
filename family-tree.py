@@ -241,7 +241,9 @@ def showBrothers(person):
             print("\t{} {}".format(b.name, b.lastName))
 
 def showSistersInLaw(person):
-
+    """
+    A function that prints a person's sisters in law.
+    """
     SistersInLaw=[]
     Brothers=[]
     Brothers=findBrothers(person)
@@ -255,7 +257,9 @@ def showSistersInLaw(person):
             print("\t{} {}".format(sl.name, sl.lastName))
 
 def showBrothersInLaw(person):
-
+    """
+    A function that prints a person's brothers in law.
+    """
     BrothersInLaw=[]
     Sisters=[]
     Sisters=findSisters(person)
@@ -267,6 +271,112 @@ def showBrothersInLaw(person):
         print("Brothers in law are:")  
         for bro in BrothersInLaw:
             print("\t{} {}".format(bro.name, bro.lastName))
+
+def showGrandchildren(person):
+    """
+    A function that prints a person's grandchildren.
+    """
+    Grandchildren=[]
+    if person.children:
+        for ch in person.children:
+            if ch.person.children:
+                for c in ch.person.children:
+                    Grandchildren.append(Person(c.person.name, c.person.firstName, c.person.lastName))
+
+    if Grandchildren:
+        print("Grandchildren:")
+        for c in Grandchildren:
+            print("\t{} {}".format(c.name, c.lastName))
+    else:
+        print("\tNo grandchildren.")
+
+def showNephews(person):
+    """
+    A function that prints a person's nephews.
+    """
+    Sisters=[]
+    Brothers=[]
+    Nephews=[]
+    Sisters=findSisters(person)
+    Brothers=findBrothers(person)
+    if Sisters or Brothers:
+        if Sisters:
+            for sister in Sisters:
+                person=getPerson(sister.id)
+                if person.children:
+                    for nephew in person.children:
+                        if nephew.person.gender=='male':
+                            Nephews.append(Person(nephew.person.name, nephew.person.firstName, nephew.person.lastName))
+        if Brothers:
+            for brother in Brothers:
+                person=getPerson(brother.id)
+                if person.children:
+                    for nephew in person.children:
+                        if nephew.person.gender=='male':
+                            Nephews.append(Person(nephew.person.name, nephew.person.firstName, nephew.person.lastName))
+    
+    if Nephews:
+        print("Nephews:")
+        for n in Nephews:
+            print("\t{} {}".format(n.name, n.lastName))
+    else:
+        print("\tNo nephews.")
+    
+def showNieces(person):
+    """
+    A function that prints a person's nieces.
+    """
+    Sisters=[]
+    Brothers=[]
+    Nieces=[]
+    Sisters=findSisters(person)
+    Brothers=findBrothers(person)
+    if Sisters or Brothers:
+        if Sisters:
+            for sister in Sisters:
+                person=getPerson(sister.id)
+                if person.children:
+                    for nephew in person.children:
+                        if nephew.person.gender=='female':
+                            Nieces.append(Person(nephew.person.name, nephew.person.firstName, nephew.person.lastName))
+        if Brothers:
+            for brother in Brothers:
+                person=getPerson(brother.id)
+                if person.children:
+                    for nephew in person.children:
+                        if nephew.person.gender=='female':
+                            Nieces.append(Person(nephew.person.name, nephew.person.firstName, nephew.person.lastName))
+    
+    if Nieces:
+        print("Nieces:")
+        for n in Nieces:
+            print("\t{} {}".format(n.name, n.lastName))
+    else:
+        print("\tNo nieces.")
+
+def showSiblingsInLaw(person):
+    """
+    A function that prints a person's siblings in law.
+    """
+    SiblingsInLaw=[]
+    if person.spouses:
+        for spouse in person.spouses:
+            if findSisters(spouse.person) or findBrothers(spouse.person):
+                for sis in findSisters(spouse.person):
+                    s=getPerson(sis.id)
+                    SiblingsInLaw.append(Person(s.name, s.firstName, s.lastName))
+                for bro in findBrothers(spouse.person):
+                    b=getPerson(bro.id)
+                    SiblingsInLaw.append(Person(b.name, b.firstName, b.lastName))
+
+    if SiblingsInLaw:
+        print("Siblings In Law:")
+        for n in SiblingsInLaw:
+            print("\t{} {}".format(n.name, n.lastName))
+    else:
+        print("\tNo Siblings In Law.")
+
+    
 
 def displayPersonData(personId,  debug = False):
     family_tree_model = getFamilyTreeModel()
@@ -291,10 +401,15 @@ def chooseRelationship():
     print("4 - brothers")
     print("5 - brothers and sisters")
     print("6 - grandparents")
-    print("7 - aunts")
-    print("8 - uncles")
-    print("9 - sisters in law")
-    print("10 - brother in law")
+    print("7 - grandchildren")
+    print("8 - aunts")
+    print("9 - uncles")
+    print("10 - sisters in law")
+    print("11 - brother in law")
+    print("12 - nephews")
+    print("13 - nieces")
+    print("14 - siblings in law")
+
     choise = input()
     print("Enter person")
     personId = input()
@@ -316,13 +431,22 @@ def chooseRelationship():
             if choise == "6":
                 showGrandparents(person)
             if choise == "7":
-                showAunts(person)
+                showGrandchildren(person)
             if choise == "8":
-                showUncles(person)
+                showAunts(person)
             if choise == "9":
-                showSistersInLaw(person)
+                showUncles(person)
             if choise == "10":
+                showSistersInLaw(person)
+            if choise == "11":
                 showBrothersInLaw(person)
+            if choise == "12":
+                showNephews(person)
+            if choise == "13":
+                showNieces(person)
+            if choise == "14":
+                showSiblingsInLaw(person)
+
     if not found:
         print("The peson {} doesn't exist in this family!".format(personId))
 
