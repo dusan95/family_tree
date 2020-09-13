@@ -286,12 +286,15 @@ def displayPersonData(personId,  debug = False):
 def chooseRelationship():
     print("Choose relationship:")
     print("1 - parents")
-    print("2 - brothers and sisters")
-    print("3 - grandparents")
-    print("4 - aunts")
-    print("5 - uncles")
-    print("6 - sisters in law")
-    print("7 - brother in law")
+    print("2 - children")
+    print("3 - sisters")
+    print("4 - brothers")
+    print("5 - brothers and sisters")
+    print("6 - grandparents")
+    print("7 - aunts")
+    print("8 - uncles")
+    print("9 - sisters in law")
+    print("10 - brother in law")
     choise = input()
     print("Enter person")
     personId = input()
@@ -303,16 +306,22 @@ def chooseRelationship():
             if choise == "1":
                 showParents(person)
             if choise == "2":
-                showBrothersAndSisters(person)
+                showChildren(person)
             if choise == "3":
-                showGrandparents(person)
+                showSisters(person)
             if choise == "4":
-                showAunts(person)
+                showBrothers(person)
             if choise == "5":
-                showUncles(person)
+                showBrothersAndSisters(person)
             if choise == "6":
-                showSistersInLaw(person)
+                showGrandparents(person)
             if choise == "7":
+                showAunts(person)
+            if choise == "8":
+                showUncles(person)
+            if choise == "9":
+                showSistersInLaw(person)
+            if choise == "10":
                 showBrothersInLaw(person)
     if not found:
         print("The peson {} doesn't exist in this family!".format(personId))
