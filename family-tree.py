@@ -146,13 +146,13 @@ def showGrandparents(person):
 
 def showAunts(person):
     """
-    A function that prints out aunts of a person.
+    A function that prints aunts of a person.
     """
     Aunts=[]
     Sisters=[]
-    if person.parent1 is not None:
+    if person.parent1:
         Aunts=findSisters(person.parent1)
-    if person.parent2 is not None:
+    if person.parent2:
         Sisters=findSisters(person.parent2)
         for s in Sisters:
             Aunts.append(s)
@@ -163,7 +163,7 @@ def showAunts(person):
 
 def showUncles(person):
     """
-    A function that prints out uncles of a person.
+    A function that prints uncles of a person.
     """
     Uncles=[]
     if person.parent1 is not None and person.parent1.gender=='female':
@@ -178,7 +178,8 @@ def showUncles(person):
 
 def findSisters(person):
     """
-    A function that prints out sisters of a person
+    A function that finds sisters of a person.
+    Returns: a list of sisters(Person).
     """
     Sisters=[]
     if person.parent1 is not None:
@@ -202,7 +203,9 @@ def findSisters(person):
     return Sisters
 
 def showSisters(person):
-
+    """
+    A function that prints a person's sisters.
+    """
     Sisters=[]
     Sisters=findSisters(person)
     if Sisters:                        
@@ -212,7 +215,8 @@ def showSisters(person):
 
 def findBrothers(person):
     """
-    A function that prints out sisters of a person
+    A function that finds a person's brothers.
+    Return: list of brothers(Person).
     """
     Brothers=[]
     if person.parent1 is not None:
@@ -236,7 +240,9 @@ def findBrothers(person):
     return Brothers
 
 def showBrothers(person):
-
+    """
+    A function that prints a person's brothers.
+    """
     Brothers=[]
     Brothers=findBrothers(person)
     if Brothers:                        
