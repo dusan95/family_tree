@@ -75,24 +75,28 @@ def showParents(person):
         if person.parent1 is None and person.parent2 is None:
             print("No data about parents.")    
 
-def showBrothersAndSisters(person):
-    """
-    A function that prints a person's brothers and sisters.
-    """
+def findBrothersAndSisters(person):
     brothersAndSisters = []
     if person.parent1:
         for c in person.parent1.children:
             if not c.person.name == person.name:
                 brothersAndSisters.append(Person(c.person.name, c.person.firstName, c.person.lastName))
-    exists = False
     if person.parent2:   
         for c in person.parent2.children:
             if not c.person.name == person.name:
+                exists = False
                 for bns in brothersAndSisters:
                     if bns.id == c.person.name:
                         exists = True
                 if not exists:
                     brothersAndSisters.append(Person(c.person.name, c.person.firstName, c.person.lastName))
+    return brothersAndSisters
+
+def showBrothersAndSisters(person):
+    """
+    A function that prints a person's brothers and sisters.
+    """
+    brothersAndSisters = findBrothersAndSisters(person)
     if brothersAndSisters:
         print("Brothers and sisters:")
         for bns in brothersAndSisters:
@@ -344,6 +348,209 @@ def checkIfChild(c, p):
             return True
     return False
 
+def checkIfBrotherOrSister(p1, p2):
+    #dohvati bracu i sestre osobe p2
+    brothersAndSisters = findBrothersAndSisters(p2)
+    if brothersAndSisters:
+        for bns in brothersAndSisters:
+            person = getPerson(bns.id)
+            if(person.name == p1.name):
+                if p1.gender:
+                    if p1.gender == "male":
+                        print("{} {} is brother of {} {}".format(p1.firstName, p1.lastName, p2.firstName, p2.lastName))
+                    else:
+                        print("{} {} is sister of {} {}".format(p1.firstName, p1.lastName, p2.firstName, p2.lastName))
+                else:
+                    print("{} {} is brother/sister of {} {}".format(p1.firstName, p1.lastName, p2.firstName, p2.lastName))
+                return True
+    return False
+
+def checkIfBrotherOrSisterInLaw(p1, p2):
+    brothersAndSisters = findBrothersAndSisters(p2)
+    if brothersAndSisters:
+        for bns in brothersAndSisters:
+            person = getPerson(bns.id)
+            if person.spouses:
+                for ps in person.spouses:    
+                    if ps.person.name == p1.name: 
+                        if p1.gender:
+                            if p1.gender == "male":
+                                print("{} {} is brother-in-law of {} {}".format(p1.firstName, p1.lastName, p2.firstName, p2.lastName))
+                            else:
+                                print("{} {} is sister-in-law of {} {}".format(p1.firstName, p1.lastName, p2.firstName, p2.lastName))
+                        else:
+                            print("{} {} is brother/sister in law of {} {}".format(p1.firstName, p1.lastName, p2.firstName, p2.lastName))
+                        return True
+    return False
+
+def checkIfSiblingInLaw(p1, p2):
+    #get spouses of  p2
+    #foreach spouse
+    if p2.spouses:
+        for sp in p2.spouses:
+            brothersAndSistersOfSpouse = findBrothersAndSisters(sp.person)
+            if brothersAndSistersOfSpouse:
+                for bns in brothersAndSistersOfSpouse:
+                    person = getPerson(bns.id)
+                    if person.name == p1.name: 
+                        print("{} {} is sibling-in-law of {} {}".format(p1.firstName, p1.lastName, p2.firstName, p2.lastName))
+                        return True
+    return False
+
+def printGrandParent(gp, p):
+    if gp.gender:
+        if gp.gender == "male":
+            return print("{} {} is grandfather of {} {}".format(gp.firstName, gp.lastName, p.firstName, p.lastName))
+        else:
+            return print("{} {} is grandmother of {} {}".format(gp.firstName, gp.lastName, p.firstName, p.lastName))
+    return print("{} {} is grandparent of {} {}".format(gp.firstName, gp.lastName, p.firstName, p.lastName))
+
+
+def checkIfGrandparent(p1, p2):
+    #get parents parent
+    if p2.parent1:
+        if p2.parent1.parent1:
+            if p2.parent1.parent1.name == p1.name:
+                printGrandParent(p1, p2)
+                return True
+        if p2.parent1.parent2:
+            if p2.parent1.parent2.name == p1.name:
+                printGrandParent(p1, p2)
+                return True
+    if p2.parent2:
+        if p2.parent2.parent1:
+            if p2.parent1.parent1.name == p1.name:
+                printGrandParent(p1, p2)
+                return True
+        if p2.parent2.parent2:
+            if p2.parent1.parent2.name == p1.name:
+                printGrandParent(p1, p2)
+                return True
+    return False
+
+def printGrandChildren(gc, p):
+    if gc.gender:
+        if gc.gender == "male":
+            return print("{} {} is grandson of {} {}".format(gc.firstName, gc.lastName, p.firstName, p.lastName))
+        else:
+            return print("{} {} is granddaughter of {} {}".format(gc.firstName, gc.lastName, p.firstName, p.lastName))
+    return print("{} {} is grandchild of {} {}".format(gc.firstName, gc.lastName, p.firstName, p.lastName))
+
+def checkIfGrandchildren(p1, p2):
+    #get parents parent
+    if p1.parent1:
+        if p1.parent1.parent1:
+            if p1.parent1.parent1.name == p2.name:
+                printGrandChildren(p1, p2)
+                return True
+        if p1.parent1.parent2:
+            if p1.parent1.parent2.name == p2.name:
+                printGrandChildren(p1, p2)
+                return True
+    if p1.parent2:
+        if p1.parent2.parent1:
+            if p1.parent1.parent1.name == p2.name:
+                printGrandChildren(p1, p2)
+                return True
+        if p1.parent2.parent2:
+            if p1.parent1.parent2.name == p2.name:
+                printGrandChildren(p1, p2)
+                return True
+    return False
+
+def printUncleOrAunt(p1, p2):
+    if p1.gender:
+        if p1.gender == "male":
+            return print("{} {} is uncle of {} {}".format(p1.firstName, p1.lastName, p2.firstName, p2.lastName))
+        else :
+            return print("{} {} is aunt of {} {}".format(p1.firstName, p1.lastName, p2.firstName, p2.lastName))
+    return print("{} {} is uncle/aunt of {} {}".format(p1.firstName, p1.lastName, p2.firstName, p2.lastName))
+
+def checkIfUncleOrAunt(p1, p2):
+    if p2.parent1:
+        auntsAndUncles = findBrothersAndSisters(p2.parent1)
+        if auntsAndUncles:
+            for anu in auntsAndUncles:
+                person = getPerson(anu.id)
+                if person.name == p1.name:
+                    printUncleOrAunt(p1,p2)
+                    return True
+    if p2.parent2:
+        auntsAndUncles = findBrothersAndSisters(p2.parent2)
+        if auntsAndUncles:
+            for anu in auntsAndUncles:
+                person = getPerson(anu.id)
+                if person.name == p1.name:
+                    printUncleOrAunt(p1,p2)
+                    return True
+    return False
+
+def checkIfNephewOrNiece(p1, p2):
+    #dohvati bracu i sestre za p2
+    #prodji kroz decu
+    brothersAndSisters = findBrothersAndSisters(p2)
+    if brothersAndSisters:
+        for bns in brothersAndSisters:
+            person = getPerson(bns.id)
+            if person.children:
+                for c in person.children:
+                    if c.person.name == p1.name:
+                        if p1.gender:
+                            if p1.gender == "male":
+                                print("{} {} is nephew of {} {}".format(p1.firstName, p1.lastName, p2.firstName, p2.lastName))
+                                return True
+                            else:
+                                print("{} {} is niece of {} {}".format(p1.firstName, p1.lastName, p2.firstName, p2.lastName))
+                                return True
+                        else:
+                            print("{} {} is nephew/niece of {} {}".format(p1.firstName, p1.lastName, p2.firstName, p2.lastName))
+                            return True
+    return False
+
+def printParenInLaw(p1, p2):
+    if p1.gender:
+        if p1.gender == "male":
+            return print("{} {} is father-in-law of {} {}".format(p1.firstName, p1.lastName, p2.firstName, p2.lastName))
+        else:
+            return print("{} {} is mother-in-law of {} {}".format(p1.firstName, p1.lastName, p2.firstName, p2.lastName))
+    else:
+        return print("{} {} is parent-in-law of {} {}".format(p1.firstName, p1.lastName, p2.firstName, p2.lastName))
+
+def checkIfParentInLaw(p1, p2):
+    if p2.spouses:
+        for spouse in p2.spouses:
+            if spouse.person.parent1:
+                if spouse.person.parent1.name == p1.name:
+                    printParenInLaw(p1, p2)
+                    return True
+            if spouse.person.parent2:
+                if spouse.person.parent2.name == p1.name:
+                    printParenInLaw(p1, p2)
+                    return True
+    return False
+
+def printChildInLaw(p1, p2):
+    if p1.gender:
+        if p1.gender == "male":
+            return print("{} {} is son-in-law of {} {}".format(p1.firstName, p1.lastName, p2.firstName, p2.lastName))
+        else:
+            return print("{} {} is daughter-in-law of {} {}".format(p1.firstName, p1.lastName, p2.firstName, p2.lastName))
+    else:
+        return print("{} {} is child-in-law of {} {}".format(p1.firstName, p1.lastName, p2.firstName, p2.lastName))
+
+def checkIfChildInLaw(p1, p2):
+    if p1.spouses:
+        for spouse in p1.spouses:
+            if spouse.person.parent1:
+                if spouse.person.parent1.name == p2.name:
+                    printParenInLaw(p1, p2)
+                    return True
+            if spouse.person.parent2:
+                if spouse.person.parent2.name == p2.name:
+                    printParenInLaw(p1, p2)
+                    return True
+    return False
+
 def getPerson(personId):
     family_tree_model = getFamilyTreeModel()
     for person in family_tree_model.persons:
@@ -357,6 +564,25 @@ def findRelationship(firstPersonId, secondPersonId):
         return
     if checkIfChild(firstPerson, secondPerson):
         return
+    if checkIfBrotherOrSister(firstPerson, secondPerson):
+        return
+    if checkIfBrotherOrSisterInLaw(firstPerson, secondPerson):
+        return 
+    if checkIfSiblingInLaw(firstPerson, secondPerson):
+        return
+    if checkIfGrandparent(firstPerson, secondPerson):
+        return
+    if checkIfGrandchildren(firstPerson, secondPerson):
+        return
+    if checkIfUncleOrAunt(firstPerson, secondPerson):
+        return
+    if checkIfNephewOrNiece(firstPerson, secondPerson):
+        return
+    if checkIfParentInLaw(firstPerson, secondPerson):
+        return
+    if checkIfChildInLaw(firstPerson, secondPerson):
+        return 
+    print("We couldn't find relation between {} {} and {} {}".format(firstPerson.firstName, firstPerson.lastName, secondPerson.firstName, secondPerson.lastName))
 
 if __name__ == '__main__':
     while do:
