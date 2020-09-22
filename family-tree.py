@@ -1,31 +1,24 @@
 from os.path import join, dirname, isfile
 from textx import metamodel_from_file
 from textx.export import metamodel_export, model_export
+from textx import metamodel_for_language
 
 class Person(object):
-    def __init__(self, id = "", name = "", lastName = "", dateOfBirth = "", alive = "", gender = "",
-     parent1 = "", parent2 = "", supose = "" ):
+    def __init__(self, id = "", name = "", lastName = ""):
         self.id = id
         self.name = name
         self.lastName = lastName
-        self.dateOfBirth = dateOfBirth
-        self.alive = alive
-        self.gender = gender
-        self.parent1 = parent1
-        self.parent2 = parent2
-        self.supose = supose
-
 
 this_folder = dirname(__file__)
 do = True
 fileName = ""
 
-def getFamilyTreeModel(debug = False):
+def getFamilyTreeModel():
     """
-    A function that gets meta-model from language description and export it to dot
-    and instantiate model and export it to dot       
+    A function that gets meta-model from language description, instantiate model
+    and export them to dot   
     """
-    family_tree_meta = metamodel_from_file(join(this_folder, 'family-tree.tx'), debug=debug)
+    family_tree_meta = metamodel_for_language('family_tree_dsl')
     metamodel_export(family_tree_meta, join(this_folder, 'family-tree_meta.dot'))
     family_tree_model = family_tree_meta.model_from_file(join(this_folder, fileName))
     model_export(family_tree_model, join(this_folder, 'family-tree.dot'))
@@ -583,7 +576,6 @@ def printGrandChildren(gc, p):
     return print("{} {} is grandchild of {} {}".format(gc.firstName, gc.lastName, p.firstName, p.lastName))
 
 def checkIfGrandchildren(p1, p2):
-    #get parents parent
     if p1.parent1:
         if p1.parent1.parent1:
             if p1.parent1.parent1.name == p2.name:
@@ -632,8 +624,6 @@ def checkIfUncleOrAunt(p1, p2):
     return False
 
 def checkIfNephewOrNiece(p1, p2):
-    #dohvati bracu i sestre za p2
-    #prodji kroz decu
     brothersAndSisters = findBrothersAndSisters(p2)
     if brothersAndSisters:
         for bns in brothersAndSisters:
