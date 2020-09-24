@@ -29,8 +29,9 @@ def generate_html (metamodel, model, output_path, overwrite, debug=False, **cust
     for query in model.queries : 
         if query.__class__.__name__ == "DisplayDataQuery":
             txt += addPersonDataHTML(query.p)
-        #if query.__class__.__name__ == "FindRelationshipQuery":
-         #   txt += "<p>" + findRelationship(model, query.p1, query.p2) + "</p>"
+    for query in model.queries : 
+        if query.__class__.__name__ == "FindRelationshipQuery":
+            txt += "<p>" + findRelationship(model, query.p1, query.p2) + "</p>"
 
     txt += """
     </body>
