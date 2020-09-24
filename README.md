@@ -18,8 +18,8 @@ Now run this command from the same directory where setup.py is located:
 
 This command should output a lot of text and once completed should generate two files in the dist directory:
     dist/
-        textX_family_tree_dsl-0.0.1-py3-none-any.whl
-        textX_family_tree_dsl-0.0.1.tar.gz
+    textX_family_tree_dsl-0.0.1-py3-none-any.whl
+    textX_family_tree_dsl-0.0.1.tar.gz
 
 The tar.gz file is a Source Archive whereas the .whl file is a Built Distribution. Newer pip versions preferentially install built distributions, but will fall back to source archives if needed.
 
