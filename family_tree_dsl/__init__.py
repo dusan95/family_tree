@@ -1,8 +1,5 @@
 import os
-import textx.scoping.tools as tools
-from textx import metamodel_from_file, TextXSyntaxError, language
-from textx.export import metamodel_export, model_export
-
+from textx import metamodel_from_file, language
 
 @language('family_tree_dsl', '*.family')
 def family_tree_dsl():
