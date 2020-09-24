@@ -29,8 +29,9 @@ def generate_html (metamodel, model, output_path, overwrite, debug=False, **cust
     for query in model.queries : 
         if query.__class__.__name__ == "DisplayDataQuery":
             txt += addPersonDataHTML(query.p)
-        #if query.__class__.__name__ == "FindRelationshipQuery":
-         #   txt += "<p>" + findRelationship(model, query.p1, query.p2) + "</p>"
+    for query in model.queries : 
+        if query.__class__.__name__ == "FindRelationshipQuery":
+           txt += "\n<p>" + findRelationship(model, query.p1, query.p2) + "</p>"
 
     txt += """
     </body>
@@ -286,7 +287,7 @@ def checkIfChildInLaw(p1, p2):
     return False
 
 def printRelationship(p1, p2, relationship):
-    return "{} {} is {} of {} {}\n".format(p1.firstName, p1.lastName, relationship, p2.firstName, p2.lastName)
+    return "{} {} is {} of {} {}".format(p1.firstName, p1.lastName, relationship, p2.firstName, p2.lastName)
 
 def addParent(p, c):
     if p.gender:
@@ -376,11 +377,11 @@ def findRelationship(model, firstPerson, secondPerson):
     if checkIfBrotherOrSister(model, firstPerson, secondPerson):
         return addBrotherOrSister(firstPerson, secondPerson)
     if checkIfSpouse(firstPerson, secondPerson):
-        return "{} {} is spouse of {} {}\n".format(firstPerson.firstName, firstPerson.lastName, secondPerson.firstName, secondPerson.lastName)
+        return "{} {} is spouse of {} {}".format(firstPerson.firstName, firstPerson.lastName, secondPerson.firstName, secondPerson.lastName)
     if checkIfBrotherOrSisterInLaw(model, firstPerson, secondPerson):
         return addBrotherOrSisterInLaw(firstPerson, secondPerson)
     if checkIfSiblingInLaw(model, firstPerson, secondPerson):
-        return "{} {} is sibling-in-law of {} {}\n".format(firstPerson.firstName, firstPerson.lastName, secondPerson.firstName, secondPerson.lastName)
+        return "{} {} is sibling-in-law of {} {}".format(firstPerson.firstName, firstPerson.lastName, secondPerson.firstName, secondPerson.lastName)
     if checkIfGrandparent(firstPerson, secondPerson):
         return addGrandParent(firstPerson, secondPerson)
     if checkIfGrandchildren(firstPerson, secondPerson):
@@ -400,10 +401,10 @@ def generate_relationship_text (metamodel, model, output_path, overwrite, debug=
     txt = ""
     for query in model.queries : 
         if query.__class__.__name__ == "DisplayDataQuery":
-            txt += addPersonData(query.p)
+            txt += addPersonData(query.p) + "\n\n"
+    for query in model.queries : 
         if query.__class__.__name__ == "FindRelationshipQuery":
-            txt += findRelationship(model, query.p1, query.p2)
-        txt +="\n"
+            txt += findRelationship(model, query.p1, query.p2) + "\n"
 
     input_file = model._tx_filename
     base_dir = output_path if output_path else os.path.dirname(input_file)
