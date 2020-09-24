@@ -7,7 +7,7 @@ from textx.export import metamodel_export, model_export
 @language('family_tree_dsl', '*.family')
 def family_tree_dsl():
     """
-    An example DSL for simple types definition
+    A meta-language for family-tree definition
     """
     current_dir = os.path.dirname(__file__)
     p = os.path.join(current_dir, 'family-tree.tx')

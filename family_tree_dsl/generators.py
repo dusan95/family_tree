@@ -14,8 +14,7 @@ def generate_html (metamodel, model, output_path, overwrite, debug=False, **cust
     """
     This command transforms *.family files to *.html files (html).
     """
-    txt = """
-<!DOCTYPE html>
+    txt = """<!DOCTYPE html>
 <html>
     <head>
         <title>Page Title</title>
@@ -26,7 +25,6 @@ def generate_html (metamodel, model, output_path, overwrite, debug=False, **cust
         </style>
     </head>
     <body>
-
     """
     for query in model.queries : 
         if query.__class__.__name__ == "DisplayDataQuery":
@@ -77,7 +75,7 @@ def addPersonDataHTML(person):
         if person.parent1:
             txt += "<tr><td>Parent: {} {}</td></tr>".format(person.parent1.firstName, person.parent1.lastName)
         if person.parent2:
-            txt += "<tr><td>Parent: {} {}</td></tr>\n".format(person.parent2.firstName, person.parent2.lastName)
+            txt += "<tr><td>Parent: {} {}</td></tr>".format(person.parent2.firstName, person.parent2.lastName)
     brothersAndSisters = findBrothersAndSisters(person)
     if brothersAndSisters:
         txt += "<tr><td>Brothers and sisters:</td>"
