@@ -421,13 +421,13 @@ def generate_relationship_text (metamodel, model, output_path, overwrite, debug=
 model_to_html = GeneratorDesc(
     language='family_tree_dsl',
     target='HTML',
-    description='Generating HTML visualization from family_tree_dsl',
+    description='Generating HTML responce for queries from family_tree_dsl model',
     generator=generate_html
 )
 
 model_query_to_txt = GeneratorDesc(
     language='family_tree_dsl',
     target='txt',
-    description='Generating txt from family_tree_dsl query',
+    description='Generating txt responce for queries from family_tree_dsl model',
     generator=generate_relationship_text
 )
