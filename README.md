@@ -2,7 +2,7 @@
 [![MIT licensed](https://img.shields.io/github/license/dusan95/family_tree)](https://img.shields.io)
 [![Python version](https://img.shields.io/badge/python-3.8-orange.svg)](https://www.python.org/)
 
-This is an example of a family tree DSL which registers new **textX** language and generators. 
+This is an example of a family tree DSL which registers new **textX** language and code generators. 
 
 File family-tree.tx in family_tree_dsl folder contains a grammar of the language. Grammar is written in **textX** DSL. Model example is given in the file **miljkovic.family** in tests folder.
 
