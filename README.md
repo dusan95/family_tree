@@ -4,9 +4,9 @@
 
 This is an example of a family tree DSL which registers new **textX** language and generators. 
 
-File family-tree.tx in family_tree_dsl folder contains a grammar of the language. Grammar is written in **textX** DSL. Model example is given in the file miljkovic.family in tests folder.
+File family-tree.tx in family_tree_dsl folder contains a grammar of the language. Grammar is written in **textX** DSL. Model example is given in the file **miljkovic.family** in tests folder.
 
-With the help of this language you can easily add family members and search through tree, ask queries about two members or give basic information about specific person, such as date of birth, spouses, parents, children and brothers and sisters.
+With the help of this language you can easily add family members and search through tree, find relationship between two members or give basic information about specific person, such as date of birth, spouses, parents, children and brothers and sisters.
 
 In tests folder there are two examples how you can use this language. **Proba.py** shows us how to use this language and generators in textX projects by using predefined functions for new languages. **Family-tree.py** is comand line application, where after entering file name you can ask queries for given model: give me basic information about this person, give me relatives of this person or enter two persons and find their relationship. 
 
@@ -58,4 +58,4 @@ MIT
 
 ## Python versions
 
-Tested for 3.4+
+Tested for 3.8
